@@ -4,6 +4,7 @@ import com.cns.project_management.model.Role;
 import com.cns.project_management.model.User;
 import com.cns.project_management.repositories.UserJpaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
+@Scope(scopeName = "prototype")
 public class UserOperationImpl implements UserOperations{
     @Autowired
     private PasswordEncoder encoder;

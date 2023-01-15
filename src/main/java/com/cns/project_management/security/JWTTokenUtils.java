@@ -4,6 +4,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Scope;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
@@ -14,6 +15,7 @@ import java.util.Map;
 import java.util.function.Function;
 
 @Component
+@Scope(scopeName = "prototype")
 public class JWTTokenUtils implements Serializable {
     private static final long serialVersionUID = -2550185165626007488L;
 

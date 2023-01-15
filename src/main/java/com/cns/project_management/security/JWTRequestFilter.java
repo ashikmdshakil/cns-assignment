@@ -3,6 +3,7 @@ package com.cns.project_management.security;
 import com.cns.project_management.model.User;
 import com.cns.project_management.repositories.UserJpaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -17,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Component
+@Scope(scopeName = "prototype")
 public class JWTRequestFilter extends OncePerRequestFilter {
 
     @Autowired

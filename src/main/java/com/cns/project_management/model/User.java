@@ -1,6 +1,7 @@
 package com.cns.project_management.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
@@ -9,6 +10,7 @@ import java.util.List;
 
 @Component
 @Entity
+@Scope(scopeName = "prototype")
 public class User  {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

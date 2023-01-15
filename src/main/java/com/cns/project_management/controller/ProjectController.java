@@ -5,6 +5,7 @@ import com.cns.project_management.service.ProjectOperations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -14,8 +15,8 @@ public class ProjectController {
 
     //creating a new project
     @PostMapping(value = "private/project/create", consumes = "application/json")
-    public String createProject(@RequestBody Project project) {
-        return projectOperations.createProject(project);
+    public String createProject(@RequestBody Project project, Principal principal) {
+        return projectOperations.createProject(project, principal.getName());
     }
 
     //updating project
@@ -56,14 +57,14 @@ public class ProjectController {
 
     //fetch all projects of owner
     @GetMapping(value = "private/project/owner")
-    public List<Project> fetchAllProjectsOfOwner() {
-        return projectOperations.ownerProjects();
+    public List<Project> fetchAllProjectsOfOwner(Principal principal) {
+        return projectOperations.ownerProjects(principal.getName());
     }
 
     //fetch all projects of employee
     @GetMapping(value = "private/project/employee")
-    public List<Project> fetchAllProjectsOfEmployee() {
-        return projectOperations.employeeProjects();
+    public List<Project> fetchAllProjectsOfEmployee(Principal principal) {
+        return projectOperations.employeeProjects(principal.getName());
     }
 
 }
