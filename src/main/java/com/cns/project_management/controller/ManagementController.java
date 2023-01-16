@@ -15,9 +15,8 @@ public class ManagementController {
 
     //creating a new project
     @PostMapping(value = "private/project/create", consumes = "application/json")
-    public String createProject(@RequestBody Project project) {
-        //return projectOperations.createProject(project, principal.getName());
-        return null;
+    public String createProject(@RequestBody Project project, Principal principal) {
+        return projectOperations.createProject(project, principal.getName());
     }
 
     //updating project
