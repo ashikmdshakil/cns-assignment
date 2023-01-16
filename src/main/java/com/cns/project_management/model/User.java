@@ -22,9 +22,9 @@ public class User  {
     private String password;
     @Transient
     private String JWTToken;
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private List<Project> projects = new ArrayList<>();
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     private Role role = new Role();
 
 

@@ -31,7 +31,7 @@ public class AuthorizationFilter extends BasicAuthenticationFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
-        if(request.getServletPath().equals("/authenticateUser")){
+        if(request.getServletPath().equals("/public/authenticateUser")){
             response.setContentType("application/json");
             response.setCharacterEncoding("UTF-8");
             utils.authenticateUser(request,response);

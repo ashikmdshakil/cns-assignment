@@ -64,7 +64,6 @@ public class AuthenticationService {
             }
 
         if(realUser != null && response.getHeader("auth").equals("authenticated")){
-            System.out.println(realUser.getName());
             Gson gson = new Gson();
             String userJsonString = gson.toJson(realUser);
             PrintWriter out = response.getWriter();

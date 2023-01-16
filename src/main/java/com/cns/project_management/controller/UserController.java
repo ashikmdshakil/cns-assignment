@@ -31,11 +31,6 @@ public class UserController {
         return userOperations.registerUser(user);
     }
 
-    //login
-    /*@PostMapping(value = "public/authenticateUser", consumes="application/json")
-    public HashMap<String, String> authenticateUser(@RequestBody Credential credential) throws IOException {
-        return authenticationService.authenticateUser(credential);
-    }*/
 
     //fetching profile
     @GetMapping("private/user/profile")
