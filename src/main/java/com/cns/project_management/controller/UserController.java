@@ -1,5 +1,7 @@
 package com.cns.project_management.controller;
 
+import com.cns.project_management.model.Credential;
+import com.cns.project_management.model.Project;
 import com.cns.project_management.model.User;
 import com.cns.project_management.security.AuthenticationService;
 import com.cns.project_management.service.UserOperations;
@@ -30,10 +32,10 @@ public class UserController {
     }
 
     //login
-    @PostMapping("public/authenticateUser")
-    public HashMap<String, String> authenticateUser(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        return authenticationService.authenticateUser(request);
-    }
+    /*@PostMapping(value = "public/authenticateUser", consumes="application/json")
+    public HashMap<String, String> authenticateUser(@RequestBody Credential credential) throws IOException {
+        return authenticationService.authenticateUser(credential);
+    }*/
 
     //fetching profile
     @GetMapping("private/user/profile")
@@ -58,4 +60,5 @@ public class UserController {
     public List<User> userList() throws IOException {
         return userOperations.getUsers();
     }
+
 }

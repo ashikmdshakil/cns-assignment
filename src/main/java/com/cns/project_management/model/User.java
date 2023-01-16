@@ -18,7 +18,6 @@ public class User  {
     @Column(unique = true)
     private String name;
     private String mobileNumber;
-    @Column(unique = true)
     private String email;
     private String password;
     @Transient

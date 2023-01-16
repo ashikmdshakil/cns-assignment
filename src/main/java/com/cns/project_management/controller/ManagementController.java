@@ -7,16 +7,17 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.List;
-
+@CrossOrigin(origins= {"/**"}, maxAge = 4800, allowCredentials = "false" )
 @RestController
-public class ProjectController {
+public class ManagementController {
     @Autowired
     private ProjectOperations projectOperations;
 
     //creating a new project
     @PostMapping(value = "private/project/create", consumes = "application/json")
-    public String createProject(@RequestBody Project project, Principal principal) {
-        return projectOperations.createProject(project, principal.getName());
+    public String createProject(@RequestBody Project project) {
+        //return projectOperations.createProject(project, principal.getName());
+        return null;
     }
 
     //updating project

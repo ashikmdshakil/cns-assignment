@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Component
@@ -22,8 +23,8 @@ public class Project {
     @OneToOne
     private User owner = new User();
     private int status;
-    private LocalDateTime startDateTime;
-    private LocalDateTime endDateTime;
+    private Date startDateTime;
+    private Date endDateTime;
     @ManyToMany
     private List<User> projectMembers = new ArrayList<>();
 
@@ -67,19 +68,19 @@ public class Project {
         this.status = status;
     }
 
-    public LocalDateTime getStartDateTime() {
+    public Date getStartDateTime() {
         return startDateTime;
     }
 
-    public void setStartDateTime(LocalDateTime startDateTime) {
+    public void setStartDateTime(Date startDateTime) {
         this.startDateTime = startDateTime;
     }
 
-    public LocalDateTime getEndDateTime() {
+    public Date getEndDateTime() {
         return endDateTime;
     }
 
-    public void setEndDateTime(LocalDateTime endDateTime) {
+    public void setEndDateTime(Date endDateTime) {
         this.endDateTime = endDateTime;
     }
 

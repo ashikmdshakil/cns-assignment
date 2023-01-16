@@ -1,5 +1,6 @@
 package com.cns.project_management.security;
 
+import com.cns.project_management.model.Credential;
 import com.cns.project_management.model.Role;
 import com.cns.project_management.model.User;
 import com.cns.project_management.repositories.UserJpaRepository;
@@ -26,49 +27,67 @@ import java.util.HashMap;
 @Scope(scopeName = "prototype")
 public class AuthenticationService {
     @Autowired
+    private User user;
+    @Autowired
+    private Role role;
+    @Autowired
     private UserJpaRepository userJpaRepository;
     @Autowired
     private JWTTokenUtils jwtTokenUtils;
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
     @Autowired
-    private User user;
-    @Autowired
-    private UserOperations userOperations;
+    private User realUser;
 
 
-    public HashMap<String, String> authenticateUser(HttpServletRequest request) throws IOException {
-        HashMap<String, String> response = new HashMap<>();
+    public HttpServletResponse authenticateUser(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String token = "";
         String userName = "";
         String password = "";
-        String upd = request.getHeader("Authorization");
+        String upd = request.getHeader("authorization");
         String pair = new String(Base64.decodeBase64(upd.substring(6)));
         userName = pair.split(":")[0];
         password = pair.split(":")[1];
-        user = userJpaRepository.findByName(userName);
-        if (user != null && passwordEncoder.matches(password, user.getPassword())) {
-            String authToken = jwtTokenUtils.generateToken(new ApplicationUserDetails(user), "user");
-            response.put("status","success");
-            response.put("token",authToken);
-            response.put("id", String.valueOf(user.getId()));
-        } else {
-            response.put("status","failed");
+            role.setId(1);
+            role.setName("user");
+            User user = userJpaRepository.findByName(userName);
+            if(user != null && passwordEncoder.matches(password, user.getPassword())){
+                String authToken = jwtTokenUtils.generateToken(new ApplicationUserDetails(user),"user");
+                user.setJWTToken(authToken);
+                token = authToken;
+                response.setHeader("auth","authenticated");
+                realUser = user;
+            }
+            else{
+                token = "unauthenticated";
+                response.setHeader("auth","unauthenticated");
+            }
+
+        if(realUser != null && response.getHeader("auth").equals("authenticated")){
+            System.out.println(realUser.getName());
+            Gson gson = new Gson();
+            String userJsonString = gson.toJson(realUser);
+            PrintWriter out = response.getWriter();
+            out.print(userJsonString);
+            out.flush();
+        }
+        else{
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
         }
         return response;
     }
 
 
-    public UserDetails getValidUserDetails(HttpServletRequest request) {
+    public UserDetails getValidUserDetails(HttpServletRequest request){
         UserDetails userDetails = null;
-        JWTTokenUtils jwtTokenUtils1 = new JWTTokenUtils();
         try {
-            String token = request.getHeader("Authorization");
+            String token= request.getHeader("Authorization");
             String jwtToken = token.substring(7);
-            String userName = jwtTokenUtils1.getUsernameFromToken(jwtToken);
-            //String roleName = jwtTokenUtils1.getRoleFromToken(jwtToken);
-            User user = userJpaRepository.findByName(userName);
-            userDetails = new ApplicationUserDetails(user);
+            String userName = jwtTokenUtils.getUsernameFromToken(jwtToken);
+                role.setId(1);
+                role.setName("user");
+                User user = userJpaRepository.findByName(userName);
+                userDetails = new ApplicationUserDetails(user);
         } catch (Exception e) {
             e.printStackTrace();
         }

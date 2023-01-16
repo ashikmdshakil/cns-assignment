@@ -26,12 +26,17 @@ public class UserOperationImpl implements UserOperations{
         String status = "";
         try {
             //encrypting user password
-            user.setPassword(encoder.encode(user.getPassword()));
-            role.setId(1);
-            role.setName("user");
-            user.setRole(role);
-            userJpaRepository.save(user);
-            status ="success";
+            if(userJpaRepository.existsByName(user.getName())){
+                status = "exist";
+            }
+            else{
+                user.setPassword(encoder.encode(user.getPassword()));
+                role.setId(1);
+                role.setName("user");
+                user.setRole(role);
+                userJpaRepository.save(user);
+                status ="success";
+            }
         } catch (Exception e) {
             e.printStackTrace();
             status = "failed";
