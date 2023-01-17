@@ -22,8 +22,6 @@ public class User  {
     private String password;
     @Transient
     private String JWTToken;
-    @ManyToMany(fetch = FetchType.EAGER)
-    private List<Project> projects = new ArrayList<>();
     @OneToOne(fetch = FetchType.EAGER)
     private Role role = new Role();
 
@@ -74,14 +72,6 @@ public class User  {
 
     public void setJWTToken(String JWTToken) {
         this.JWTToken = JWTToken;
-    }
-
-    public List<Project> getProjects() {
-        return projects;
-    }
-
-    public void setProjects(List<Project> projects) {
-        this.projects = projects;
     }
 
     public Role getRole() {
