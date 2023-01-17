@@ -48,7 +48,15 @@ public class ProjectOperationImpl implements ProjectOperations{
 
     @Override
     public String deleteProject(int id) {
-        return null;
+        String status = "";
+        try {
+            Project project = projectJpaRepository.findById(id);
+            projectJpaRepository.delete(project);
+            status = "success";
+        } catch (Exception e) {
+            status = "failed";
+        }
+        return status;
     }
 
     @Override
