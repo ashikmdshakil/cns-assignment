@@ -119,6 +119,7 @@ public class ProjectOperationImpl implements ProjectOperations{
 
     @Override
     public List<Project> employeeProjects(String userName) {
-        return null;
+        User user = userJpaRepository.findByName(userName);
+        return projectJpaRepository.findAllByProjectMembersContains(user);
     }
 }
