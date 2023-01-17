@@ -78,7 +78,6 @@ public class ProjectOperationImpl implements ProjectOperations{
             User user =  userJpaRepository.findByName(employeeName);
             Project project = projectJpaRepository.findById(projectId);
             project.getProjectMembers().remove(user);
-            System.out.println("Project is ok...no parsing erro..");
             projectJpaRepository.save(project);
             status = "success";
         } catch (Exception e) {
