@@ -12,6 +12,7 @@ import java.security.Principal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 @Component
@@ -129,6 +130,15 @@ public class ProjectOperationImpl implements ProjectOperations{
     @Override
     public List<Project> searchByDate(String start, String end, int status) throws ParseException {
         SimpleDateFormat formatter=new SimpleDateFormat("dd/mm/yyyy");
-        return projectJpaRepository.findAllByEndDateTimeIsBetweenAndStatus(formatter.parse(Util.formatDateString(start)), formatter.parse(Util.formatDateString(end)), status);
+        return projectJpaRepository.findAllByEndDateTimeIsGreaterThanAndEndDateTimeIsLessThanAndStatus(formatter.parse(Util.formatDateString(start)), formatter.parse(Util.formatDateString(end)), status);
+    }
+
+    @Override
+    public HashMap<String, String> projectReports() {
+        HashMap<String, String> data = new HashMap<>();
+        data.put("projects", String.valueOf(projectJpaRepository.count()));
+        data.put("users", String.valueOf(userJpaRepository.count()));
+        data.put("runnings",String.valueOf(projectJpaRepository.countDistinctByStatus(1)));
+        return data;
     }
 }

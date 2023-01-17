@@ -4,6 +4,7 @@ import com.cns.project_management.model.Project;
 
 import java.text.ParseException;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 public interface ProjectOperations {
@@ -17,4 +18,5 @@ public interface ProjectOperations {
     List<Project> ownerProjects(String userName);
     List<Project> employeeProjects(String userName);
     List<Project> searchByDate(String start, String end, int status) throws ParseException;
+    HashMap<String, String> projectReports();
 }

@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.security.Principal;
 import java.text.ParseException;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 @CrossOrigin(origins= {"/**"}, maxAge = 4800, allowCredentials = "false" )
 @RestController
@@ -73,6 +74,13 @@ public class ManagementController {
     @GetMapping(value = "private/project/search")
     public List<Project> fetchAllProjectsByDate(@RequestParam("startingDate") String startTime, @RequestParam("endTime") String endTime, @RequestParam("status") int status) throws ParseException {
         return projectOperations.searchByDate(startTime, endTime, status);
+    }
+
+
+    //fetch overview
+    @GetMapping(value = "private/project/overview")
+    public HashMap<String, String> fetchAllProjectsOverView() throws ParseException {
+        return projectOperations.projectReports();
     }
 
 }
