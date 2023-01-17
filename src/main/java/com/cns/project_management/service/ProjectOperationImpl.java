@@ -9,6 +9,9 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import java.security.Principal;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @Component
@@ -121,5 +124,11 @@ public class ProjectOperationImpl implements ProjectOperations{
     public List<Project> employeeProjects(String userName) {
         User user = userJpaRepository.findByName(userName);
         return projectJpaRepository.findAllByProjectMembersContains(user);
+    }
+
+    @Override
+    public List<Project> searchByDate(String start, String end, int status) throws ParseException {
+        SimpleDateFormat formatter=new SimpleDateFormat("dd/mm/yyyy");
+        return projectJpaRepository.findAllByEndDateTimeIsBetweenAndStatus(formatter.parse(Util.formatDateString(start)), formatter.parse(Util.formatDateString(end)), status);
     }
 }

@@ -2,6 +2,8 @@ package com.cns.project_management.service;
 
 import com.cns.project_management.model.Project;
 
+import java.text.ParseException;
+import java.util.Date;
 import java.util.List;
 
 public interface ProjectOperations {
@@ -14,4 +16,5 @@ public interface ProjectOperations {
     List<Project> totalProjects();
     List<Project> ownerProjects(String userName);
     List<Project> employeeProjects(String userName);
+    List<Project> searchByDate(String start, String end, int status) throws ParseException;
 }

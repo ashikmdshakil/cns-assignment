@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.text.ParseException;
+import java.util.Date;
 import java.util.List;
 @CrossOrigin(origins= {"/**"}, maxAge = 4800, allowCredentials = "false" )
 @RestController
@@ -65,6 +67,12 @@ public class ManagementController {
     @GetMapping(value = "private/project/employee")
     public List<Project> fetchAllProjectsOfEmployee(Principal principal) {
         return projectOperations.employeeProjects(principal.getName());
+    }
+
+    //fetch all projects by certain date and status
+    @GetMapping(value = "private/project/search")
+    public List<Project> fetchAllProjectsByDate(@RequestParam("startingDate") String startTime, @RequestParam("endTime") String endTime, @RequestParam("status") int status) throws ParseException {
+        return projectOperations.searchByDate(startTime, endTime, status);
     }
 
 }
