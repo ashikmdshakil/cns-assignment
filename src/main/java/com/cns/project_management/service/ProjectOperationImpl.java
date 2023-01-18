@@ -131,10 +131,7 @@ public class ProjectOperationImpl implements ProjectOperations{
     @Override
     public List<Project> searchByDate(String start, String end, int status) throws ParseException {
         SimpleDateFormat formatter=new SimpleDateFormat("dd/mm/yyyy");
-        LocalDateTime startTime = Util.convertToLocalDateTime(formatter.parse(Util.formatDateString(start)));
-        LocalDateTime endTime = Util.convertToLocalDateTime(formatter.parse(Util.formatDateString(start)));
-        System.out.println(startTime);
-        return projectJpaRepository.findAllByEndDateTimeIsGreaterThanAndEndDateTimeIsLessThanAndStatus(startTime, endTime, status);
+        return projectJpaRepository.findAllByEndDateTimeBetweenAndStatus(start, end, status);
     }
 
     @Override
