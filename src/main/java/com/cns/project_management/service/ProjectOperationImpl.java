@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 import java.security.Principal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -130,7 +131,10 @@ public class ProjectOperationImpl implements ProjectOperations{
     @Override
     public List<Project> searchByDate(String start, String end, int status) throws ParseException {
         SimpleDateFormat formatter=new SimpleDateFormat("dd/mm/yyyy");
-        return projectJpaRepository.findAllByEndDateTimeIsGreaterThanAndEndDateTimeIsLessThanAndStatus(formatter.parse(Util.formatDateString(start)), formatter.parse(Util.formatDateString(end)), status);
+        LocalDateTime startTime = Util.convertToLocalDateTime(formatter.parse(Util.formatDateString(start)));
+        LocalDateTime endTime = Util.convertToLocalDateTime(formatter.parse(Util.formatDateString(start)));
+        System.out.println(startTime);
+        return projectJpaRepository.findAllByEndDateTimeIsGreaterThanAndEndDateTimeIsLessThanAndStatus(startTime, endTime, status);
     }
 
     @Override

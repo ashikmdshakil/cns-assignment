@@ -1,5 +1,10 @@
 package com.cns.project_management.service;
 
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
+
 public class Util {
     public static String formatDateString(String date){
         String year = "";
@@ -23,5 +28,11 @@ public class Util {
             }
         }
         return day+"/"+month+"/"+year;
+    }
+
+    public static LocalDateTime convertToLocalDateTime(Date dateToConvert) {
+        return Instant.ofEpochMilli(dateToConvert.getTime())
+                .atZone(ZoneId.systemDefault())
+                .toLocalDateTime();
     }
 }
